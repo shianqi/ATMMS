@@ -1,0 +1,21 @@
+#MyEclipse Hibernate Properties
+#Mon May 16 21:18:01 CST 2016
+genBasicCompId=false
+sessionFactoryName=com.ATMMS.imudges.DAO.HibernateSessionFactory
+profile=
+daoSFId=
+jndiPath=
+detectM2M=false
+reStrategyClass=
+detectO2O=false
+springDaoFile=
+useJavaTypes=true
+keyGenerator=
+genVersionTag=false
+sessionFactoryId=
+basePersistenceClass=
+genAnnotations=false
+reSettingsFile=
+configFile=/ATMMS/src/hibernate.cfg.xml
+createConfigFile=true
+baseDaoClass=BaseHibernateDAO
