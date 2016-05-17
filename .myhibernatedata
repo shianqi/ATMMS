@@ -1,5 +1,5 @@
 #MyEclipse Hibernate Properties
-#Mon May 16 21:18:01 CST 2016
+#Tue May 17 19:39:50 CST 2016
 genBasicCompId=false
 sessionFactoryName=com.ATMMS.imudges.DAO.HibernateSessionFactory
 profile=
@@ -18,4 +18,4 @@ genAnnotations=false
 reSettingsFile=
 configFile=/ATMMS/src/hibernate.cfg.xml
 createConfigFile=true
-baseDaoClass=BaseHibernateDAO
+baseDaoClass=com.ATMMS.imudges.DAO.BaseHibernateDAO

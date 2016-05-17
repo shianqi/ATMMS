@@ -3,7 +3,9 @@ package com.ATMMS.imudges.action;
 import java.util.Map;
 
 import com.ATMMS.imudges.service.FactoryService;
+import com.ATMMS.imudges.service.ItemService;
 import com.ATMMS.imudges.service.MajorService;
+import com.ATMMS.imudges.service.OptionService;
 import com.ATMMS.imudges.service.SubsystemService;
 import com.ATMMS.imudges.service.UserService;
 import com.ATMMS.imudges.util.MD5;
@@ -39,9 +41,13 @@ public class Login extends ActionSupport{
 		MajorService majorService = new MajorService();
 		FactoryService factoryService = new FactoryService();
 		SubsystemService subsystemService = new SubsystemService();
+		ItemService itemService = new ItemService();
+		OptionService optionService = new OptionService();
 		
 		majorService.getAllMajor();
 		factoryService.getAllFactory();
 		subsystemService.getAllSubsystem();
+		itemService.getAllItem();
+		optionService.getAllOption();
 	}
 }

@@ -1,3 +1,5 @@
+<%@page import="com.ATMMS.imudges.DAO.Option"%>
+<%@page import="com.ATMMS.imudges.DAO.Item"%>
 <%@page import="com.ATMMS.imudges.DAO.Factory"%>
 <%@page import="com.ATMMS.imudges.DAO.Subsystem"%>
 <%@page import="com.ATMMS.imudges.DAO.Major"%>
@@ -28,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		{
 		  	document.getElementById('left_size').style.height = (document.body.clientHeight-60) + 'px';
 		  	document.getElementById('treeDemo').style.height = (document.body.clientHeight-60-42) + 'px';
-		  	document.getElementById('J_iframe').width = (document.body.clientWidth-280) + 'px';
+		  	document.getElementById('J_iframe').width = (document.body.clientWidth-320) + 'px';
 		  	document.getElementById('J_iframe').height = (document.body.clientHeight-65) + 'px';
 		}
 			
@@ -37,7 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		window.onresize = function () {
 			document.getElementById('left_size').style.height = (document.body.clientHeight-60) + 'px';
 			document.getElementById('treeDemo').style.height = (document.body.clientHeight-60-42) + 'px';
-			document.getElementById('J_iframe').width = (document.body.clientWidth-280) + 'px';
+			document.getElementById('J_iframe').width = (document.body.clientWidth-320) + 'px';
 			document.getElementById('J_iframe').height = (document.body.clientHeight-65) + 'px';
 		}
 		var setting = {
@@ -73,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for(int i=0;i<list.size();i++){
 					Major major = list.get(i);
 			%>
-					{ id:"<%=major.getNum()%>", pId:0, name:"<%=major.getName()%>", open:true},
+					{ id:"<%=major.getNum()%>", pId:0, name:"<%=major.getName()%>", open:true, isParent:true},
 			<%
 				}
 			%>
@@ -84,17 +86,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for(int i=0;i<list2.size();i++){
 					Subsystem subsystem = list2.get(i);
 			%>
-					{ id:"<%=subsystem.getNum()%>", pId:"<%=subsystem.getParent()%>", name:"<%=subsystem.getName()%>", open:true},
+					{ id:"<%=subsystem.getNum()%>", pId:"<%=subsystem.getParent()%>", name:"<%=subsystem.getName()%>", open:true, isParent:true},
 			<%
 				}
 			%>
 			
 			<%
 				List<Factory> list3 = (List<Factory>)request.getAttribute("allFactory");
+				List<Option> list4 = (List<Option>)request.getAttribute("allOption");
 				for(int i=0;i<list3.size();i++){
 					Factory factory = list3.get(i);
 			%>
-					{ id:"<%=factory.getNum()%>", pId:"<%=factory.getParent()%>", name:"<%=factory.getName()%>", open:true},
+					{ id:"<%=factory.getNum()%>", pId:"<%=factory.getParent()%>", name:"<%=factory.getName()%>", open:false, isParent:true},
+			<%
+					for(int j=0;j<list4.size();j++){
+						Option option = list4.get(j);
+			%>
+						{ id:"<%=factory.getNum()%>-<%=option.getNum()%>", pId:"<%=factory.getNum()%>", name:"<%=option.getName()%>", open:false, isParent:true},
+			<%
+					}
+				}
+			%>
+			
+			<%
+				List<Item> list5 = (List<Item>)request.getAttribute("allItem");
+				for(int i=0;i<list5.size();i++){
+					Item item = list5.get(i);
+			%>
+					{ id:"<%=item.getNum()%>", pId:"<%=item.getParent()%>", name:"<%=item.getName()%>", open:false, isParent:false ,href:"<%=basePath%>showItem.action?id=<%=item.getId()%>"},
 			<%
 				}
 			%>
@@ -105,7 +124,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			return false;
 		}
 		function onClick(event, treeId, treeNode, clickFlag) {
-			console.log(""+treeNode.name+" ---- "+treeNode.id+" ---- "+treeNode.pId);
+			//console.log(""+treeNode.name+" ---- "+treeNode.id+" ---- "+treeNode.pId);
 			document.getElementById('J_iframe').src=treeNode.href;
 			//window.open(treeNode.link);
 		}

@@ -23,6 +23,7 @@
 		<mapping resource="com/ATMMS/imudges/DAO/Factory.hbm.xml" />
 		<mapping resource="com/ATMMS/imudges/DAO/Major.hbm.xml" />
 		<mapping resource="com/ATMMS/imudges/DAO/User.hbm.xml" />
+		<mapping resource="com/ATMMS/imudges/DAO/Option.hbm.xml" />
 
 	</session-factory>
 

@@ -11,4 +11,14 @@
 			</result>
 		</action>
 	</package>
+	<package name="item" namespace="/" extends="struts-default, json-default">
+		<action name="showItem" class="com.ATMMS.imudges.action.ShowItem">
+			<result name="success">
+				/JSP/item/showItem.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+	</package>
 </struts>    

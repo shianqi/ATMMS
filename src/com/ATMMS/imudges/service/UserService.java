@@ -21,4 +21,25 @@ public class UserService {
 		}
 		return false;
 	}
+	
+	public static boolean haveUserPurview(){
+		Map<String , Object> session = ActionContext.getContext().getSession();
+		if(session.get("state")!=null&&session.get("state").equals("1")&&(session.get("userType").equals("2")||session.get("userType").equals("1"))){
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean haveAdminPurview(){
+		Map<String , Object> session = ActionContext.getContext().getSession();
+		if(session.get("state")!=null&&session.get("userType")!=null&&session.get("state").equals("1")&&session.get("userType").equals("1")){
+			return true;
+		}
+		return false;
+	}
+	
+	public void logout(){
+		Map<String , Object> session = ActionContext.getContext().getSession();
+		session.clear();
+	}
 }
