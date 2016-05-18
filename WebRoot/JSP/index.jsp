@@ -75,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for(int i=0;i<list.size();i++){
 					Major major = list.get(i);
 			%>
-					{ id:"<%=major.getNum()%>", pId:0, name:"<%=major.getName()%>", open:true, isParent:true},
+					{ id:"<%=major.getNum()%>", pId:0, name:"<%=major.getName()%>",type:"major", open:true, isParent:true},
 			<%
 				}
 			%>
@@ -86,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for(int i=0;i<list2.size();i++){
 					Subsystem subsystem = list2.get(i);
 			%>
-					{ id:"<%=subsystem.getNum()%>", pId:"<%=subsystem.getParent()%>", name:"<%=subsystem.getName()%>", open:true, isParent:true},
+					{ id:"<%=subsystem.getNum()%>", pId:"<%=subsystem.getParent()%>", name:"<%=subsystem.getName()%>",type:"subsystem", open:true, isParent:true},
 			<%
 				}
 			%>
@@ -97,12 +97,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for(int i=0;i<list3.size();i++){
 					Factory factory = list3.get(i);
 			%>
-					{ id:"<%=factory.getNum()%>", pId:"<%=factory.getParent()%>", name:"<%=factory.getName()%>", open:false, isParent:true},
+					{ id:"<%=factory.getNum()%>", pId:"<%=factory.getParent()%>", name:"<%=factory.getName()%>",type:"factory", open:false, isParent:true},
 			<%
 					for(int j=0;j<list4.size();j++){
 						Option option = list4.get(j);
 			%>
-						{ id:"<%=factory.getNum()%>-<%=option.getNum()%>", pId:"<%=factory.getNum()%>", name:"<%=option.getName()%>", open:false, isParent:true},
+						{ id:"<%=factory.getNum()%>-<%=option.getNum()%>", pId:"<%=factory.getNum()%>", name:"<%=option.getName()%>", type:"option", open:false, isParent:true},
 			<%
 					}
 				}
@@ -113,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for(int i=0;i<list5.size();i++){
 					Item item = list5.get(i);
 			%>
-					{ id:"<%=item.getNum()%>", pId:"<%=item.getParent()%>", name:"<%=item.getName()%>", open:false, isParent:false ,href:"<%=basePath%>showItem.action?id=<%=item.getId()%>"},
+					{ id:"<%=item.getNum()%>", pId:"<%=item.getParent()%>", name:"<%=item.getName()%>", type:"item", open:false, isParent:false ,href:"<%=basePath%>showItem.action?id=<%=item.getId()%>"},
 			<%
 				}
 			%>
@@ -125,7 +125,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		function onClick(event, treeId, treeNode, clickFlag) {
 			//console.log(""+treeNode.name+" ---- "+treeNode.id+" ---- "+treeNode.pId);
-			document.getElementById('J_iframe').src=treeNode.href;
+			if(treeNode.href!=null){
+				document.getElementById('J_iframe').src=treeNode.href;
+			}
+			
 			//window.open(treeNode.link);
 		}
 		function beforeRemove(treeId, treeNode) {
@@ -167,16 +170,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			isParent = e.data.isParent,
 			nodes = zTree.getSelectedNodes(),
 			treeNode = nodes[0];
-			if (treeNode) {
-				treeNode = zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, isParent:isParent, name:"new node" + (newCount++)});
-			} else {
-				treeNode = zTree.addNodes(null, {id:(100 + newCount), pId:0, isParent:isParent, name:"new node" + (newCount++)});
+			if(typeof(treeNode)=="undefined"){
+				date={
+					pId:0,
+					pType:"major",
+					isParent:isParent
+				}
+			}else{
+				date={
+					pId:treeNode.id,
+					pType:treeNode.type,
+					isParent:isParent
+				}
 			}
-			if (treeNode) {
-				zTree.editName(treeNode[0]);
-			} else {
-				alert("叶子节点被锁定，无法增加子节点");
-			}
+			
+			$.post(
+				"<%=basePath%>addItem.action",
+				date,
+				function(id,state){
+					if(state){
+						if (treeNode) {
+							treeNode = zTree.addNodes(treeNode, {id:id, pId:treeNode.id, isParent:isParent, name:"new node" + (newCount++)});
+						} else {
+							treeNode = zTree.addNodes(null, {id:(100 + newCount), pId:0, isParent:true, name:"new folder" + (newCount++)});
+						}
+						if (treeNode) {
+							zTree.editName(treeNode[0]);
+						} else {
+							alert("叶子节点被锁定，无法增加子节点");
+						}
+					}
+				}
+			);
 		};
 		function edit() {
 			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
@@ -199,16 +224,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var callbackFlag = $("#callbackTrigger").attr("checked");
 			zTree.removeNode(treeNode, callbackFlag);
 		};
-		function clearChildren(e) {
-			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-			nodes = zTree.getSelectedNodes(),
-			treeNode = nodes[0];
-			if (nodes.length == 0 || !nodes[0].isParent) {
-				alert("请先选择一个父节点");
-				return;
-			}
-			zTree.removeChildNodes(treeNode);
-		};
 		
 		$(document).ready(function(){
 			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
@@ -216,7 +231,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#addLeaf").bind("click", {isParent:false}, add);
 			$("#edit").bind("click", edit);
 			$("#remove").bind("click", remove);
-			$("#clearChildren").bind("click", clearChildren);
 		});
 		//-->
 	</SCRIPT>

@@ -20,5 +20,13 @@
 				/JSP/Error.jsp
 			</result>
 		</action>
+		<action name="addItem" class="com.ATMMS.imudges.action.AddItem">
+			<result name="success" type="json">
+                <param name="root">addItemModel</param>
+                <param name="excludeNullProperties">true</param>
+                <param name="noCache">true</param>
+                <param name="charSet">UTF-8</param>
+            </result>
+		</action>
 	</package>
 </struts>    
