@@ -1,8 +1,10 @@
 package com.ATMMS.imudges.DAO;
 
 import java.util.List;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +24,10 @@ public class FactoryDAO extends BaseHibernateDAO  {
 	public static final String PARENT = "parent";
 	public static final String NUM = "num";
 
-
-
     
     public void save(Factory transientInstance) {
         log.debug("saving Factory instance");
+        Transaction transaction= getSession().beginTransaction();
         try {
             getSession().save(transientInstance);
             log.debug("save successful");
@@ -34,6 +35,8 @@ public class FactoryDAO extends BaseHibernateDAO  {
             log.error("save failed", re);
             throw re;
         }
+        transaction.commit();
+		getSession().close();
     }
     
 	public void delete(Factory persistentInstance) {

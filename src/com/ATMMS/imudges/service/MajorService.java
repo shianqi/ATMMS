@@ -18,10 +18,8 @@ public class MajorService {
 		MajorDAO majorDAO = new MajorDAO();
 		int number = majorDAO.findAll().size();
 		
-		String[] str = {"I","II","III","IV","V","VI","VII","VIII","IX","X"};
 		Major major = new Major();
 		major.setName("new folder");
-		major.setNum(str[number]);
 		majorDAO.save(major);
 		return major.getId();
 	}

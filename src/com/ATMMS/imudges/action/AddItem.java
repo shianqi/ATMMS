@@ -1,6 +1,7 @@
 package com.ATMMS.imudges.action;
 
 import com.ATMMS.imudges.service.MajorService;
+import com.ATMMS.imudges.service.SubsystemService;
 import com.ATTMS.imudges.Model.AddItemModel;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -26,11 +27,11 @@ public class AddItem extends ActionSupport{
 		this.addItemModel = addItemModel;
 	}
 
-	public String getpId() {
+	public String getPId() {
 		return pId;
 	}
 
-	public void setpId(String pId) {
+	public void setPId(String pId) {
 		this.pId = pId;
 	}
 
@@ -47,23 +48,25 @@ public class AddItem extends ActionSupport{
 	@Override
 	public String execute() throws Exception {
 		addItemModel = new AddItemModel();
-		addItemModel.setState("false");
+		addItemModel.setCode("false");
 		addItemModel.setId("");
 		if(chechPurview()){
 			if(isParent.equals("true")){
-				if(pType.equals("major")){
+				if(pType.equals("root")){
 					MajorService majorService = new MajorService();
 					addItemModel.setId(majorService.addMajor(pId)+"");
-					addItemModel.setState("true");
-				}else if(pType=="subsystem"){
+					addItemModel.setCode("true");
+				}else if(pType.equals("major")){
+					SubsystemService subsystemService = new SubsystemService();
+					addItemModel.setId(subsystemService.addSubsystem(pId)+"");
+					addItemModel.setCode("true");
+				}else if(pType.equals("subsystem")){
 					
-				}else if(pType=="factory"){
-					
-				}else if(pType=="option"){
+				}else if(pType.equals("factory")){
 					
 				}
 			}else{
-				if(pType=="item"){
+				if(pType.equals("option")){
 					
 				}
 			}

@@ -75,7 +75,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for(int i=0;i<list.size();i++){
 					Major major = list.get(i);
 			%>
-					{ id:"<%=major.getNum()%>", pId:0, name:"<%=major.getName()%>",type:"major", open:true, isParent:true},
+					{ 
+						id:"<%=major.getId()%>-major", 
+						pId:0,  
+						rId:"<%=major.getId()%>", 
+						rpId:0,
+						name:"<%=major.getName()%>",
+						type:"major", 
+						open:true, 
+						isParent:true
+					},
 			<%
 				}
 			%>
@@ -86,7 +95,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for(int i=0;i<list2.size();i++){
 					Subsystem subsystem = list2.get(i);
 			%>
-					{ id:"<%=subsystem.getNum()%>", pId:"<%=subsystem.getParent()%>", name:"<%=subsystem.getName()%>",type:"subsystem", open:true, isParent:true},
+					{ 
+						id:"<%=subsystem.getId()%>-subsystem", 
+						pId:"<%=subsystem.getParent()%>-major", 
+						rId:"<%=subsystem.getId()%>", 
+						rpId:<%=subsystem.getParent()%>,
+						name:"<%=subsystem.getName()%>",
+						type:"subsystem", 
+						open:true, 
+						isParent:true
+					},
 			<%
 				}
 			%>
@@ -97,12 +115,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for(int i=0;i<list3.size();i++){
 					Factory factory = list3.get(i);
 			%>
-					{ id:"<%=factory.getNum()%>", pId:"<%=factory.getParent()%>", name:"<%=factory.getName()%>",type:"factory", open:false, isParent:true},
+					{ 
+						id:"<%=factory.getId()%>-factory", 
+						pId:"<%=factory.getParent()%>-subsystem", 
+						rId:"<%=factory.getId()%>", 
+						rpId:"<%=factory.getParent()%>",
+						name:"<%=factory.getName()%>",
+						type:"factory", 
+						open:false, 
+						isParent:true
+					},
 			<%
 					for(int j=0;j<list4.size();j++){
 						Option option = list4.get(j);
 			%>
-						{ id:"<%=factory.getNum()%>-<%=option.getNum()%>", pId:"<%=factory.getNum()%>", name:"<%=option.getName()%>", type:"option", open:false, isParent:true},
+						{ 
+							id:"<%=factory.getId()%>-<%=option.getNum()%>", 
+							pId:"<%=factory.getId()%>-factory", 
+							name:"<%=option.getName()%>", 
+							type:"option", open:false, 
+							isParent:true
+						 },
 			<%
 					}
 				}
@@ -113,7 +146,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				for(int i=0;i<list5.size();i++){
 					Item item = list5.get(i);
 			%>
-					{ id:"<%=item.getNum()%>", pId:"<%=item.getParent()%>", name:"<%=item.getName()%>", type:"item", open:false, isParent:false ,href:"<%=basePath%>showItem.action?id=<%=item.getId()%>"},
+					{ 
+						id:"<%=item.getId()%>", 
+						pId:"<%=item.getParent()%>-<%=item.getProject()%>",
+						rId:"<%=item.getId()%>", 
+						rpId:"<%=item.getParent()%><%=item.getProject()%>",
+						name:"<%=item.getName()%>", 
+						type:"item", 
+						open:false, 
+						isParent:false ,
+						href:"<%=basePath%>showItem.action?id=<%=item.getId()%>"
+					},
 			<%
 				}
 			%>
@@ -173,12 +216,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if(typeof(treeNode)=="undefined"){
 				date={
 					pId:0,
-					pType:"major",
+					pType:"root",
 					isParent:isParent
 				}
 			}else{
 				date={
-					pId:treeNode.id,
+					pId:treeNode.rId,
 					pType:treeNode.type,
 					isParent:isParent
 				}
@@ -187,12 +230,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$.post(
 				"<%=basePath%>addItem.action",
 				date,
-				function(id,state){
-					if(state){
+				function(date){
+					alert(date.code);
+					if(date.code=="true"){
 						if (treeNode) {
-							treeNode = zTree.addNodes(treeNode, {id:id, pId:treeNode.id, isParent:isParent, name:"new node" + (newCount++)});
+							treeNode = zTree.addNodes(treeNode, {id:date.id, pId:treeNode.id, isParent:isParent, name:"new folder"});
 						} else {
-							treeNode = zTree.addNodes(null, {id:(100 + newCount), pId:0, isParent:true, name:"new folder" + (newCount++)});
+							treeNode = zTree.addNodes(null, {id:date.id, pId:0, isParent:true, name:"new folder"});
 						}
 						if (treeNode) {
 							zTree.editName(treeNode[0]);
