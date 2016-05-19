@@ -1,7 +1,10 @@
 package com.ATMMS.imudges.action;
 
+import com.ATMMS.imudges.service.FactoryService;
+import com.ATMMS.imudges.service.ItemService;
 import com.ATMMS.imudges.service.MajorService;
 import com.ATMMS.imudges.service.SubsystemService;
+import com.ATMMS.imudges.service.UserService;
 import com.ATTMS.imudges.Model.AddItemModel;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -9,6 +12,53 @@ public class AddItem extends ActionSupport{
 	private String pId;
 	private String pType;
 	private String isParent;
+	
+	private String name;
+	private String ascription;
+	private String principal;
+	private String medium;
+	private String remark;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAscription() {
+		return ascription;
+	}
+
+	public void setAscription(String ascription) {
+		this.ascription = ascription;
+	}
+
+	public String getPrincipal() {
+		return principal;
+	}
+
+	public void setPrincipal(String principal) {
+		this.principal = principal;
+	}
+
+	public String getMedium() {
+		return medium;
+	}
+
+	public void setMedium(String medium) {
+		this.medium = medium;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 	public String getIsParent() {
 		return isParent;
 	}
@@ -50,7 +100,7 @@ public class AddItem extends ActionSupport{
 		addItemModel = new AddItemModel();
 		addItemModel.setCode("false");
 		addItemModel.setId("");
-		if(chechPurview()){
+		if(UserService.chechPurview()){
 			if(isParent.equals("true")){
 				if(pType.equals("root")){
 					MajorService majorService = new MajorService();
@@ -61,13 +111,17 @@ public class AddItem extends ActionSupport{
 					addItemModel.setId(subsystemService.addSubsystem(pId)+"");
 					addItemModel.setCode("true");
 				}else if(pType.equals("subsystem")){
-					
+					FactoryService factoryService = new FactoryService();
+					addItemModel.setId(factoryService.addFactory(pId)+"");
+					addItemModel.setCode("true");
 				}else if(pType.equals("factory")){
 					
 				}
 			}else{
 				if(pType.equals("option")){
-					
+					ItemService itemService = new ItemService();
+					addItemModel.setId(itemService.addItem(pId,name,ascription,principal,medium,remark)+"");
+					addItemModel.setCode("true");
 				}
 			}
 		}
@@ -75,7 +129,5 @@ public class AddItem extends ActionSupport{
 	}
 	
 	//判断是否有删除权限
-	public boolean chechPurview(){
-		return true;
-	}
+	
 }

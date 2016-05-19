@@ -130,8 +130,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						Option option = list4.get(j);
 			%>
 						{ 
-							id:"<%=factory.getId()%>-<%=option.getNum()%>", 
+							id:"<%=option.getNum()%>-<%=factory.getId()%>", 
 							pId:"<%=factory.getId()%>-factory", 
+							rId:"<%=option.getNum()%>-<%=factory.getId()%>", 
 							name:"<%=option.getName()%>", 
 							type:"option", open:false, 
 							isParent:true
@@ -148,9 +149,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			%>
 					{ 
 						id:"<%=item.getId()%>", 
-						pId:"<%=item.getParent()%>-<%=item.getProject()%>",
+						pId:"<%=item.getProject()%>-<%=item.getParent()%>",
 						rId:"<%=item.getId()%>", 
-						rpId:"<%=item.getParent()%><%=item.getProject()%>",
+						rpId:"<%=item.getProject()%><%=item.getParent()%>",
 						name:"<%=item.getName()%>", 
 						type:"item", 
 						open:false, 
@@ -167,11 +168,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			return false;
 		}
 		function onClick(event, treeId, treeNode, clickFlag) {
-			//console.log(""+treeNode.name+" ---- "+treeNode.id+" ---- "+treeNode.pId);
+			//console.log(""+treeNode.id+"    "+treeNode.pId);
 			if(treeNode.href!=null){
 				document.getElementById('J_iframe').src=treeNode.href;
 			}
-			
 			//window.open(treeNode.link);
 		}
 		function beforeRemove(treeId, treeNode) {
@@ -231,7 +231,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				"<%=basePath%>addItem.action",
 				date,
 				function(date){
-					alert(date.code);
 					if(date.code=="true"){
 						if (treeNode) {
 							treeNode = zTree.addNodes(treeNode, {id:date.id, pId:treeNode.id, isParent:isParent, name:"new folder"});
@@ -247,6 +246,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			);
 		};
+		
+		function addItem(){
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			nodes = zTree.getSelectedNodes(),
+			treeNode = nodes[0];
+			if(treeNode.type=="option"){
+				document.getElementById('J_iframe').src="showAddItemPage.action?pId="+treeNode.rId;
+			}
+			
+		}
+		
 		function edit() {
 			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
 			nodes = zTree.getSelectedNodes(),
@@ -272,7 +282,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$(document).ready(function(){
 			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
 			$("#addParent").bind("click", {isParent:true}, add);
-			$("#addLeaf").bind("click", {isParent:false}, add);
+			$("#addLeaf").bind("click", {isParent:false}, addItem);
 			$("#edit").bind("click", edit);
 			$("#remove").bind("click", remove);
 		});

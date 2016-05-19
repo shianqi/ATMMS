@@ -18,6 +18,7 @@
 		<property name="dialect">
 			org.hibernate.dialect.MySQLDialect
 		</property>
+		<property name="connection.characterEncoding">utf8</property>  
 		<mapping resource="com/ATMMS/imudges/DAO/Subsystem.hbm.xml" />
 		<mapping resource="com/ATMMS/imudges/DAO/Item.hbm.xml" />
 		<mapping resource="com/ATMMS/imudges/DAO/Factory.hbm.xml" />

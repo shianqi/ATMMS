@@ -20,7 +20,6 @@ public class SubsystemService {
 		SubsystemDAO subsystemDAO = new SubsystemDAO();
 		Subsystem subsystem = new Subsystem();
 		subsystem.setName("new folder");
-		System.out.println(pId);
 		subsystem.setParent(pId);
 		subsystemDAO.save(subsystem);
 		return subsystem.getId();

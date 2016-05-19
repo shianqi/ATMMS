@@ -42,4 +42,8 @@ public class UserService {
 		Map<String , Object> session = ActionContext.getContext().getSession();
 		session.clear();
 	}
+	
+	public static boolean chechPurview(){
+		return true;
+	}
 }

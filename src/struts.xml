@@ -28,5 +28,13 @@
                 <param name="charSet">UTF-8</param>
             </result>
 		</action>
+		<action name="showAddItemPage" class="com.ATMMS.imudges.action.ShowAddItemPage">
+			<result name="success">
+				/JSP/item/showAddItemPage.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
 	</package>
 </struts>    
