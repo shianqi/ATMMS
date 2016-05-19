@@ -10,6 +10,14 @@
 				/index.jsp
 			</result>
 		</action>
+		<action name="logout" class="com.ATMMS.imudges.action.Logout">
+			<result name="success">
+				/index.jsp
+			</result>
+			<result name="error">
+				/index.jsp
+			</result>
+		</action>
 	</package>
 	<package name="item" namespace="/" extends="struts-default, json-default">
 		<action name="showItem" class="com.ATMMS.imudges.action.ShowItem">

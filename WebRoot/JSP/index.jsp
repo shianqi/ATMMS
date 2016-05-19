@@ -301,7 +301,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://www.shianqi.com" target="J_iframe">Brand</a>
+      <a class="navbar-brand" target="J_iframe">Brand</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -331,7 +331,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="<%=basePath%>logout.action">注销</a></li>
           </ul>
         </li>
       </ul>

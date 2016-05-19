@@ -38,9 +38,10 @@ public class UserService {
 		return false;
 	}
 	
-	public void logout(){
+	public boolean logout(){
 		Map<String , Object> session = ActionContext.getContext().getSession();
 		session.clear();
+		return true;
 	}
 	
 	public static boolean chechPurview(){
