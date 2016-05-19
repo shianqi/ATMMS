@@ -14,10 +14,19 @@ public class AddItem extends ActionSupport{
 	private String isParent;
 	
 	private String name;
+	private String num;
 	private String ascription;
 	private String principal;
 	private String medium;
 	private String remark;
+	
+	public String getNum() {
+		return num;
+	}
+
+	public void setNum(String num) {
+		this.num = num;
+	}
 	
 	public String getName() {
 		return name;
@@ -104,15 +113,15 @@ public class AddItem extends ActionSupport{
 			if(isParent.equals("true")){
 				if(pType.equals("root")){
 					MajorService majorService = new MajorService();
-					addItemModel.setId(majorService.addMajor(pId)+"");
+					addItemModel.setId(majorService.addMajor(pId,name)+"");
 					addItemModel.setCode("true");
 				}else if(pType.equals("major")){
 					SubsystemService subsystemService = new SubsystemService();
-					addItemModel.setId(subsystemService.addSubsystem(pId)+"");
+					addItemModel.setId(subsystemService.addSubsystem(pId,name)+"");
 					addItemModel.setCode("true");
 				}else if(pType.equals("subsystem")){
 					FactoryService factoryService = new FactoryService();
-					addItemModel.setId(factoryService.addFactory(pId)+"");
+					addItemModel.setId(factoryService.addFactory(pId,name,num)+"");
 					addItemModel.setCode("true");
 				}else if(pType.equals("factory")){
 					

@@ -14,12 +14,12 @@ public class MajorService {
 		ServletActionContext.getRequest().setAttribute("allMajor", list);
 	}
 	
-	public int addMajor(String pId){
+	public int addMajor(String pId,String name){
 		MajorDAO majorDAO = new MajorDAO();
 		int number = majorDAO.findAll().size();
 		
 		Major major = new Major();
-		major.setName("new folder");
+		major.setName(name);
 		majorDAO.save(major);
 		return major.getId();
 	}

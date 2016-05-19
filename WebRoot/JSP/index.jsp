@@ -213,17 +213,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			isParent = e.data.isParent,
 			nodes = zTree.getSelectedNodes(),
 			treeNode = nodes[0];
+			
+			var folderName = $("#folderName").val();
+			var folderNum = $("#folderNum").val();
+			if(folderName==""){
+				folderName = "new folder"
+			}
+			if(folderNum==""){
+				folderNum = "NULL"
+			}
+			
+			
 			if(typeof(treeNode)=="undefined"){
 				date={
 					pId:0,
 					pType:"root",
-					isParent:isParent
+					isParent:isParent,
+					name:folderName+"",
+					num:folderNum+""
 				}
 			}else{
 				date={
 					pId:treeNode.rId,
 					pType:treeNode.type,
-					isParent:isParent
+					isParent:isParent,
+					name:folderName+"",
+					num:folderNum+""
 				}
 			}
 			
@@ -233,15 +248,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				function(date){
 					if(date.code=="true"){
 						if (treeNode) {
-							treeNode = zTree.addNodes(treeNode, {id:date.id, pId:treeNode.id, isParent:isParent, name:"new folder"});
+							treeNode = zTree.addNodes(treeNode, {id:date.id, pId:treeNode.id, isParent:isParent, name:folderName});
 						} else {
-							treeNode = zTree.addNodes(null, {id:date.id, pId:0, isParent:true, name:"new folder"});
+							treeNode = zTree.addNodes(null, {id:date.id, pId:0, isParent:true, name:folderName});
 						}
 						if (treeNode) {
-							zTree.editName(treeNode[0]);
+							
 						} else {
 							alert("叶子节点被锁定，无法增加子节点");
 						}
+						$('#myModal').modal('hide');
 					}
 				}
 			);
@@ -279,12 +295,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			zTree.removeNode(treeNode, callbackFlag);
 		};
 		
+		function showModal(e){
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			nodes = zTree.getSelectedNodes(),
+			treeNode = nodes[0];
+			if(typeof(treeNode)=="undefined"){
+				$('#myModal').modal('show');
+				$('#abbreviation').css("display","none");
+			}else{
+				if (treeNode.type == "subsystem") {
+					$('#myModal').modal('show');
+					$('#abbreviation').css("display","table");
+				}else if(treeNode.type == "factory"||treeNode.type=="option"){
+					return;
+				}else{
+					$('#myModal').modal('show');
+					$('#abbreviation').css("display","none");
+				}
+			}
+			
+		}
+		
 		$(document).ready(function(){
 			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
 			$("#addParent").bind("click", {isParent:true}, add);
 			$("#addLeaf").bind("click", {isParent:false}, addItem);
 			$("#edit").bind("click", edit);
 			$("#remove").bind("click", remove);
+			$("#showModal").bind("click", showModal);
 		});
 		//-->
 	</SCRIPT>
@@ -342,14 +380,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="left_size">
 		<ul id="treeDemo" class="ztree"></ul>
 		<div class="right">
-			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="addParent" href="#" title="增加父节点" onclick="return false;">增加文件夹</a> ]
+			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="showModal" href="#" title="增加父节点" onclick="return false;">增加文件夹</a> ]
 			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="addLeaf" href="#" title="增加叶子节点" onclick="return false;">增加文件</a> ]
 			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="edit" href="#" title="编辑名称" onclick="return false;">编辑名称</a> ]<br/>
 			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="remove" href="#" title="删除节点" onclick="return false;">删除节点</a> ]
 		</div>
 	</div>
 	
-	<iframe id="J_iframe" class="J_iframe" name="J_iframe" width="100%" height="100%" src="" seamless></iframe>
-
+	<iframe style="overflow-y:scroll;" id="J_iframe" class="J_iframe" name="J_iframe" width="100%" height="100%" src="" seamless></iframe>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">增加文件夹</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">名称</span>
+			  <input id="folderName" value="" type="text" class="form-control" placeholder="new folder" aria-describedby="basic-addon1" required="required">
+			</div>
+			<br>
+			<div class="input-group" id="abbreviation">
+			  <span class="input-group-addon" id="basic-addon1">简称</span>
+			  <input id="folderNum" value="" type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" required="required">
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	        <button id="addParent" type="button" class="btn btn-primary">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </BODY>
 </HTML>

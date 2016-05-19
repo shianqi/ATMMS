@@ -16,10 +16,10 @@ public class SubsystemService {
 		ServletActionContext.getRequest().setAttribute("allSubsystem", list);
 	}
 	
-	public int addSubsystem(String pId){
+	public int addSubsystem(String pId, String name){
 		SubsystemDAO subsystemDAO = new SubsystemDAO();
 		Subsystem subsystem = new Subsystem();
-		subsystem.setName("new folder");
+		subsystem.setName(name);
 		subsystem.setParent(pId);
 		subsystemDAO.save(subsystem);
 		return subsystem.getId();

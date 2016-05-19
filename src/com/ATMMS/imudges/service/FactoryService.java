@@ -16,10 +16,11 @@ public class FactoryService {
 		ServletActionContext.getRequest().setAttribute("allFactory", list);
 	}
 	
-	public int addFactory(String pId){
+	public int addFactory(String pId, String name, String num){
 		FactoryDAO factoryDAO = new FactoryDAO();
 		Factory factory = new Factory();
-		factory.setName("new folder");
+		factory.setName(name);
+		factory.setNum(num);
 		factory.setParent(pId);
 		factoryDAO.save(factory);
 		return factory.getId();
