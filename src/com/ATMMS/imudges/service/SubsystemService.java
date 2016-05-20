@@ -24,4 +24,11 @@ public class SubsystemService {
 		subsystemDAO.save(subsystem);
 		return subsystem.getId();
 	}
+	
+	public void rename(int id, String name){
+		SubsystemDAO subsystemDAO = new SubsystemDAO();
+		Subsystem subsystem = subsystemDAO.findById(id);
+		subsystem.setName(name);
+		subsystemDAO.save(subsystem);
+	}
 }

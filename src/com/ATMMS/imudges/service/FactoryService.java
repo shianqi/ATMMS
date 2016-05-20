@@ -25,4 +25,11 @@ public class FactoryService {
 		factoryDAO.save(factory);
 		return factory.getId();
 	}
+	
+	public void rename(int id, String name){
+		FactoryDAO factoryDAO = new FactoryDAO();
+		Factory factory = factoryDAO.findById(id);
+		factory.setName(name);
+		factoryDAO.save(factory);
+	}
 }

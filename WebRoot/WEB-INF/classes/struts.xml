@@ -44,5 +44,29 @@
 				/JSP/Error.jsp
 			</result>
 		</action>
+		<action name="fixItem" class="com.ATMMS.imudges.action.FixItem">
+			<result name="success">
+				/JSP/item/fixItem.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+		<action name="fixItemDown" class="com.ATMMS.imudges.action.FixItemDown">
+			<result name="success">
+				/JSP/Success.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+		<action name="rename" class="com.ATMMS.imudges.action.Rename">
+			<result name="success" type="json">
+                <param name="root">renameModel</param>
+                <param name="excludeNullProperties">true</param>
+                <param name="noCache">true</param>
+                <param name="charSet">UTF-8</param>
+            </result>
+		</action>
 	</package>
 </struts>    

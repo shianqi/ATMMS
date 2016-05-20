@@ -63,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			callback: {
 				beforeDrag: beforeDrag,
 				beforeRemove: beforeRemove,
-				beforeRename: beforeRename,
+				beforeRename: beforeRename,	
 				onRemove: onRemove,
 				onClick: onClick
 			}
@@ -168,7 +168,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			return false;
 		}
 		function onClick(event, treeId, treeNode, clickFlag) {
-			//console.log(""+treeNode.id+"    "+treeNode.pId);
+			//console.log(""+treeNode.id+"    "+treeNode.pId); 
 			if(treeNode.href!=null){
 				document.getElementById('J_iframe').src=treeNode.href;
 			}
@@ -189,6 +189,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				setTimeout(function(){zTree.editName(treeNode)}, 10);
 				return false;
 			}
+			if(treeNode.type=="option"){
+				alert("该节点不可编辑");
+				return true;
+			}
+			$.post(
+				"<%=basePath%>rename.action",
+				{
+					id:treeNode.rId,
+					type:treeNode.type,
+					name:newName
+				},
+				function(date){
+					if(date.state=="true"){
+						return true;
+					}else{
+						alert("ERROR");
+						return true;
+					}
+				}
+			);
 			return true;
 		}
 		function showLog(str) {

@@ -52,6 +52,24 @@ public class ItemService {
 		return item.getId();
 	}
 	
+	public boolean fixItemInformation(int id,String name,String ascription,String principal,String medium,String remark){
+		try {
+			ItemDAO itemDAO = new ItemDAO();
+			Item item = itemDAO.findById(id);
+			item.setName(name);
+			item.setAscription(ascription);
+			item.setPrincipal(principal);
+			item.setMedium(medium);
+			item.setRemark(remark);
+			item.setFixTime(new Timestamp(System.currentTimeMillis()));
+			itemDAO.save(item);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+	}
+	
 	public String getNumber(int id){
 		String str = "";
 		int num = 0;
@@ -66,7 +84,10 @@ public class ItemService {
 		ItemDAO itemDAO = new ItemDAO();
 		
 		Item item = itemDAO.findById(id);
-		List<Item> items = itemDAO.findByProject(item.getProject());
+		Item item2 = new Item();
+		item2.setProject(item.getProject());
+		item2.setParent(item.getParent());
+		List<Item> items = itemDAO.findByExample(item2);
 		
 		for(int i=0;i<items.size();i++){
 			if(items.get(i).getId()==id){
@@ -92,7 +113,7 @@ public class ItemService {
 		}
 		
 		String[] majorNum = {"¢ñ","¢ò","¢ó","¢ô","¢õ","¢ö","¢÷","¢ø","¢ù","¢ú"};
-		majorString = majorNum[num];
+		majorString = majorNum[num-1];
 		
 		str = majorString+"-"+subsystemString+"-"+factoryString+"-"+itemString;
 		return str;

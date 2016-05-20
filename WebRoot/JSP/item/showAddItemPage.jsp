@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					medium:medium,
 					remark:remark
 				};
-			alert(principal);
+				
 			$.post(
 				"<%=basePath%>addItem.action",
 				date,
@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							href:"<%=basePath%>showItem.action?id="+date.id
 						});
 						if (treeNode) {
-							//zTree.editName(treeNode[0]);
+							window.parent.document.getElementById('J_iframe').src='<%=basePath%>showItem.action?id='+date.id;
 						} else {
 							alert("叶子节点被锁定，无法增加子节点");
 						}

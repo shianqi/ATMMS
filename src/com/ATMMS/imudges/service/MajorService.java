@@ -23,4 +23,11 @@ public class MajorService {
 		majorDAO.save(major);
 		return major.getId();
 	}
+	
+	public void rename(int id, String name){
+		MajorDAO majorDAO = new MajorDAO();
+		Major major = majorDAO.findById(id);
+		major.setName(name);
+		majorDAO.save(major);
+	}
 }
