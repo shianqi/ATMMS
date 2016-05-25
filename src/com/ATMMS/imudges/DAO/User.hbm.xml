@@ -8,7 +8,7 @@
     <class name="com.ATMMS.imudges.DAO.User" table="user" catalog="ATMMS">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="identity" />
+            <generator class="increment" />
         </id>
         <property name="username" type="java.lang.String">
             <column name="username" not-null="true" />

@@ -62,7 +62,7 @@ public class FixItemDown extends ActionSupport{
 
 	@Override
 	public String execute() throws Exception {
-		if(UserService.chechPurview()){
+		if(UserService.haveAdminPurview()){
 			ItemService itemService = new ItemService();
 			if(itemService.fixItemInformation(id, name, ascription, principal, medium, remark)){
 				return SUCCESS;

@@ -3,20 +3,11 @@ package com.ATMMS.imudges.action;
 import com.ATMMS.imudges.service.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class ShowAddItemPage extends ActionSupport{
-	private String pId;
-	
-	public String getPId() {
-		return pId;
-	}
-	
-	public void setPId(String pId) {
-		this.pId = pId;
-	}
-	
+public class UserManage extends ActionSupport{
 	@Override
 	public String execute() throws Exception {
-		if(UserService.chechPurview()){
+		UserService userService = new UserService();
+		if(userService.showUserList()){
 			return SUCCESS;
 		}
 		return ERROR;

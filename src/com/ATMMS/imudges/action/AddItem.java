@@ -111,6 +111,9 @@ public class AddItem extends ActionSupport{
 		addItemModel.setId("");
 		if(UserService.chechPurview()){
 			if(isParent.equals("true")){
+				if(!UserService.haveAdminPurview()){
+					return SUCCESS;
+				}
 				if(pType.equals("root")){
 					MajorService majorService = new MajorService();
 					addItemModel.setId(majorService.addMajor(pId,name)+"");

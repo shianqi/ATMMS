@@ -68,5 +68,45 @@
                 <param name="charSet">UTF-8</param>
             </result>
 		</action>
+		<action name="fixUserPassword" class="com.ATMMS.imudges.action.FixUserPassword">
+			<result name="success">
+				/JSP/Success.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+		<action name="userManage" class="com.ATMMS.imudges.action.UserManage">
+			<result name="success">
+				/JSP/showUserList.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+		<action name="adminFixPassword" class="com.ATMMS.imudges.action.AdminFixPassword">
+			<result name="success">
+				/JSP/adminFixPassword.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+		<action name="adminFixPasswordDown" class="com.ATMMS.imudges.action.AdminFixPasswordDown">
+			<result name="success">
+				/JSP/Success.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+		<action name="adminAddUser" class="com.ATMMS.imudges.action.AdminAddUser">
+			<result name="success">
+				/JSP/Success.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
 	</package>
 </struts>    

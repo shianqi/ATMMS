@@ -46,7 +46,7 @@ public class Rename extends ActionSupport{
 	@Override
 	public String execute() throws Exception {
 		renameModel = new RenameModel();
-		if(UserService.chechPurview()){
+		if(UserService.haveAdminPurview()){
 			if(type.equals("major")){
 				MajorService majorService = new MajorService();
 				majorService.rename(id, name);

@@ -364,30 +364,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+   		<%
+	    	if(request.getSession().getValue("userType").equals("1")){
+	    %>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">用户管理<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+          	<li><a href="<%=basePath%>JSP/adminAddUser.jsp" target="J_iframe">添加用户</a></li>
+			<li><a href="<%=basePath%>userManage.action" target="J_iframe">查看用户</a></li>
           </ul>
         </li>
       </ul>
+      <%
+			}
+		%>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
+        <li><a href="#"><%=request.getSession().getValue("username")%></a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">设置 <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+          <ul class="dropdown-menu">  
+            <li><a href="<%=basePath%>JSP/fix_user_password.jsp" target="J_iframe">修改密码</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="<%=basePath%>logout.action">注销</a></li>
           </ul>
@@ -400,10 +397,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="left_size">
 		<ul id="treeDemo" class="ztree"></ul>
 		<div class="right">
+			<%
+                if(request.getSession().getValue("userType").equals("1")){
+            %>
 			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="showModal" href="#" title="增加父节点" onclick="return false;">增加文件夹</a> ]
+			<%
+				}
+			%>
 			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="addLeaf" href="#" title="增加叶子节点" onclick="return false;">增加文件</a> ]
+			<%
+                if(request.getSession().getValue("userType").equals("1")){
+            %>
 			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="edit" href="#" title="编辑名称" onclick="return false;">编辑名称</a> ]<br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="remove" href="#" title="删除节点" onclick="return false;">删除节点</a> ]
+			<%
+				}
+			%>
+			<!--  &nbsp;&nbsp;&nbsp;&nbsp;[ <a id="remove" href="#" title="删除节点" onclick="return false;">删除节点</a> ]-->
 		</div>
 	</div>
 	

@@ -18,7 +18,7 @@ public class FixItem extends ActionSupport{
 	@Override
 	public String execute() throws Exception {
 		ItemService itemService = new ItemService();
-		if(UserService.haveUserPurview()){
+		if(UserService.haveAdminPurview()){
 			if(itemService.showItemById(id)){
 				return SUCCESS;
 			}

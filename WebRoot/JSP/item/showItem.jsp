@@ -83,6 +83,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      	<%=item.getRemark()%>
 	      </div>
 		</div>
+		<%
+			if(request.getSession().getValue("userType").equals("1")){
+		%>
 		<form  action="<%=basePath%>fixItem.action" method="post">
 		<input type="text" name="id" style="display:none;" class="form-control" value="${id}" placeholder="" aria-describedby="basic-addon1" required="required">
 		<div class="btn-group btn-group-justified" role="group" aria-label="...">
@@ -90,7 +93,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <button type="submit" class="btn btn-default">修改文档</button>
             </div>
         </div>
-	</form>
+		</form>
+		<%
+			}
+		%>
 	</div>
 	
 </body>
