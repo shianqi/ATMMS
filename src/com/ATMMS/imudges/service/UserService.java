@@ -106,4 +106,17 @@ public class UserService {
 		}
 		return false;
 	}
+	
+	public boolean adminDelUser(int id){
+		if(haveAdminPurview()){
+			UserDAO userDAO = new UserDAO();
+			User user = userDAO.findById(id);
+			if(!user.getUserType().equals("1")){
+				userDAO.delete(user);
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
 }

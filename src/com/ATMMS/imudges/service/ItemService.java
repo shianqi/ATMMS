@@ -1,17 +1,16 @@
 package com.ATMMS.imudges.service;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
-import org.junit.Test;
 
 import com.ATMMS.imudges.DAO.Factory;
 import com.ATMMS.imudges.DAO.FactoryDAO;
 import com.ATMMS.imudges.DAO.Item;
 import com.ATMMS.imudges.DAO.ItemDAO;
-import com.ATMMS.imudges.DAO.Major;
+import com.ATMMS.imudges.DAO.Itemchange;
+import com.ATMMS.imudges.DAO.ItemchangeDAO;
 import com.ATMMS.imudges.DAO.MajorDAO;
 import com.ATMMS.imudges.DAO.Subsystem;
 import com.ATMMS.imudges.DAO.SubsystemDAO;
@@ -58,28 +57,68 @@ public class ItemService {
 			Item item = itemDAO.findById(id);
 			itemDAO.delete(item);
 			return true;
+		}else if(UserService.haveUserPurview()){
+			ItemDAO itemDAO = new ItemDAO();
+			Item item = itemDAO.findById(id);
+			ItemchangeDAO changeDAO = new ItemchangeDAO();
+			Itemchange change = new Itemchange();
+			change.setPid(item.getId()+"");
+			change.setType("2");
+			changeDAO.save(change);
+			return true;
 		}
 		return false;
 	}
 	
+	/**
+	 * 修改文档信息
+	 * @param id
+	 * @param name
+	 * @param ascription
+	 * @param principal
+	 * @param medium
+	 * @param remark
+	 * @return
+	 */
 	public boolean fixItemInformation(int id,String name,String ascription,String principal,String medium,String remark){
 		try {
-			ItemDAO itemDAO = new ItemDAO();
-			Item item = itemDAO.findById(id);
-			item.setName(name);
-			item.setAscription(ascription);
-			item.setPrincipal(principal);
-			item.setMedium(medium);
-			item.setRemark(remark);
-			item.setFixTime(new Timestamp(System.currentTimeMillis()));
-			itemDAO.save(item);
-			return true;
+			if(UserService.haveAdminPurview()){
+				ItemDAO itemDAO = new ItemDAO();
+				Item item = itemDAO.findById(id);
+				item.setName(name);
+				item.setAscription(ascription);
+				item.setPrincipal(principal);
+				item.setMedium(medium);
+				item.setRemark(remark);
+				item.setFixTime(new Timestamp(System.currentTimeMillis()));
+				itemDAO.save(item);
+				return true;
+			}else if(UserService.haveUserPurview()){
+				ItemDAO itemDAO = new ItemDAO();
+				Item item = itemDAO.findById(id);
+				ItemchangeDAO changeDAO = new ItemchangeDAO();
+				Itemchange change = new Itemchange();
+				change.setPid(item.getId()+"");
+				change.setName(name);
+				change.setAscription(ascription);
+				change.setPrinclpal(principal);
+				change.setMedium(medium);
+				change.setRemark(remark);
+				change.setType("1");
+				changeDAO.save(change);
+				return true;
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return false;
 	}
 	
+	/**
+	 * 得到文档编号
+	 * @param id id
+	 * @return 编号
+	 */
 	public String getNumber(int id){
 		String str = "";
 		int num = 0;

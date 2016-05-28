@@ -127,5 +127,13 @@
 				/JSP/Error.jsp
 			</result>
 		</action>
+		<action name="adminDelUser" class="com.ATMMS.imudges.action.AdminDelUser">
+			<result name="success">
+				/JSP/Success.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
 	</package>
 </struts>    

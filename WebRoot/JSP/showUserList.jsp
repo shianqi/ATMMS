@@ -53,6 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		          </td>
 		          <td>
 		          	<a href="${basePath}adminFixPassword.action?id=<%=user.getId()%>">修改密码</a>
+		          	<a href="${basePath}adminDelUser.action?id=<%=user.getId()%>">删除用户</a>
 		          </td>
 		        </tr>
 			  <%

@@ -1,12 +1,11 @@
 package com.ATMMS.imudges.action;
 
-import com.ATMMS.imudges.service.ItemService;
 import com.ATMMS.imudges.service.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class FixItem extends ActionSupport{
+public class AdminDelUser extends ActionSupport{
 	private int id;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -17,11 +16,9 @@ public class FixItem extends ActionSupport{
 
 	@Override
 	public String execute() throws Exception {
-		ItemService itemService = new ItemService();
-		if(UserService.chechPurview()){
-			if(itemService.showItemById(id)){
-				return SUCCESS;
-			}
+		UserService userService = new UserService();
+		if(userService.adminDelUser(id)){
+			return SUCCESS;
 		}
 		return ERROR;
 	}
