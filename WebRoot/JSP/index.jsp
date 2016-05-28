@@ -311,8 +311,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				alert("请先选择一个节点");
 				return;
 			}
-			var callbackFlag = $("#callbackTrigger").attr("checked");
-			zTree.removeNode(treeNode, callbackFlag);
+			if(treeNode.type=="factory"){
+				$.post(
+					"<%=basePath%>delFactory.action",
+					{
+						id:treeNode.rId
+					},
+					function(date){
+						if(date.state=="true"){
+							zTree.removeNode(treeNode, true);
+						}else{
+							alert("此节点不为空，不可删除");
+						}
+					}
+				);
+				
+			}else{
+				alert("此节点不可删除");
+			}
+			
 		};
 		
 		function showModal(e){
@@ -409,6 +426,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 if(request.getSession().getValue("userType").equals("1")){
             %>
 			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="edit" href="#" title="编辑名称" onclick="return false;">编辑名称</a> ]<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="remove" href="#" title="删除厂家" onclick="return false;">删除厂家</a> ]<br/>
 			<%
 				}
 			%>

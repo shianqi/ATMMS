@@ -94,9 +94,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>
 		</form>
+		<br>
+		<script>
+			function del(value){
+				var zTree = window.parent.$.fn.zTree.getZTreeObj("treeDemo",parent.document);
+				var nodes = zTree.getNodesByParam("id",value,null);
+				var treeNode = nodes[0];
+				
+				$.post(
+					"<%=basePath%>delItem.action",
+					{
+						id:value
+					},
+					function(date){
+						if(date.state=="true"){
+							zTree.removeNode(treeNode, true);
+							window.parent.document.getElementById('J_iframe').src='<%=basePath%>JSP/Success.jsp';
+						}else{
+							alert("删除失败，请重试");
+						}
+					}
+				);
+				
+				}
+		</script>
+		<div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <div class="btn-group" role="group">
+                <a type="button" href="javascript:del(${id})" class="btn btn-danger">删除文档</a>
+            </div>
+        </div>
+
 		<%
 			}
 		%>
+		
 	</div>
 	
 </body>

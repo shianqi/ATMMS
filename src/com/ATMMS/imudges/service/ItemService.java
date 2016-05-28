@@ -52,6 +52,16 @@ public class ItemService {
 		return item.getId();
 	}
 	
+	public boolean delItem(int id){
+		if(UserService.haveAdminPurview()){
+			ItemDAO itemDAO = new ItemDAO();
+			Item item = itemDAO.findById(id);
+			itemDAO.delete(item);
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean fixItemInformation(int id,String name,String ascription,String principal,String medium,String remark){
 		try {
 			ItemDAO itemDAO = new ItemDAO();

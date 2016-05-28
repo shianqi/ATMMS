@@ -41,6 +41,7 @@ public class FactoryDAO extends BaseHibernateDAO  {
     
 	public void delete(Factory persistentInstance) {
         log.debug("deleting Factory instance");
+        Transaction transaction= getSession().beginTransaction();
         try {
             getSession().delete(persistentInstance);
             log.debug("delete successful");
@@ -48,6 +49,8 @@ public class FactoryDAO extends BaseHibernateDAO  {
             log.error("delete failed", re);
             throw re;
         }
+        transaction.commit();
+		getSession().close();
     }
     
     public Factory findById( java.lang.Integer id) {

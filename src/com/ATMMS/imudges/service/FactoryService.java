@@ -6,6 +6,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.ATMMS.imudges.DAO.Factory;
 import com.ATMMS.imudges.DAO.FactoryDAO;
+import com.ATMMS.imudges.DAO.ItemDAO;
 import com.ATMMS.imudges.DAO.Subsystem;
 import com.ATMMS.imudges.DAO.SubsystemDAO;
 
@@ -24,6 +25,19 @@ public class FactoryService {
 		factory.setParent(pId);
 		factoryDAO.save(factory);
 		return factory.getId();
+	}
+	
+	public boolean delFactory(int id){
+		FactoryDAO factoryDAO = new FactoryDAO();
+		Factory factory = factoryDAO.findById(id);
+		
+		ItemDAO itemDAO = new ItemDAO();
+		if(itemDAO.findByParent(id+"").size()>0){
+			return false;
+		}else{
+			factoryDAO.delete(factory);
+			return true;
+		}
 	}
 	
 	public void rename(int id, String name){

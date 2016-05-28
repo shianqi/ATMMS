@@ -49,6 +49,7 @@ public class ItemDAO extends BaseHibernateDAO  {
     
 	public void delete(Item persistentInstance) {
         log.debug("deleting Item instance");
+        Transaction transaction= getSession().beginTransaction();
         try {
             getSession().delete(persistentInstance);
             log.debug("delete successful");
@@ -56,6 +57,8 @@ public class ItemDAO extends BaseHibernateDAO  {
             log.error("delete failed", re);
             throw re;
         }
+        transaction.commit();
+		getSession().close();
     }
     
     public Item findById( java.lang.Integer id) {

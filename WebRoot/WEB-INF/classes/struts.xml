@@ -52,6 +52,25 @@
 				/JSP/Error.jsp
 			</result>
 		</action>
+		
+		<action name="delItem" class="com.ATMMS.imudges.action.DelItem">
+			<result name="success" type="json">
+                <param name="root">delItemModel</param>
+                <param name="excludeNullProperties">true</param>
+                <param name="noCache">true</param>
+                <param name="charSet">UTF-8</param>
+            </result>
+		</action>
+		
+		<action name="delFactory" class="com.ATMMS.imudges.action.DelFactory">
+			<result name="success" type="json">
+                <param name="root">delFactoryModel</param>
+                <param name="excludeNullProperties">true</param>
+                <param name="noCache">true</param>
+                <param name="charSet">UTF-8</param>
+            </result>
+		</action>
+		
 		<action name="fixItemDown" class="com.ATMMS.imudges.action.FixItemDown">
 			<result name="success">
 				/JSP/Success.jsp
