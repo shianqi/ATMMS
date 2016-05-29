@@ -31,6 +31,7 @@ public class ItemchangeDAO extends BaseHibernateDAO {
 	public static final String PRINCLPAL = "princlpal";
 	public static final String MEDIUM = "medium";
 	public static final String REMARK = "remark";
+	public static final String USERNAME = "username";
 
 	public void save(Itemchange transientInstance) {
 		log.debug("saving Itemchange instance");
@@ -128,6 +129,10 @@ public class ItemchangeDAO extends BaseHibernateDAO {
 
 	public List findByRemark(Object remark) {
 		return findByProperty(REMARK, remark);
+	}
+
+	public List findByUsername(Object username) {
+		return findByProperty(USERNAME, username);
 	}
 
 	public List findAll() {

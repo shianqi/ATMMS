@@ -135,5 +135,45 @@
 				/JSP/Error.jsp
 			</result>
 		</action>
+		<action name="showItemList" class="com.ATMMS.imudges.action.ShowItemList">
+			<result name="success">
+				/JSP/item/showItemList.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+		<action name="showDelInformation" class="com.ATMMS.imudges.action.ShowDelInformation">
+			<result name="success">
+				/JSP/item/showDelInformation.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+		<action name="itemDelDone" class="com.ATMMS.imudges.action.ItemDelDown">
+			<result name="success">
+				/JSP/Success.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+		<action name="itemChangeDone" class="com.ATMMS.imudges.action.ItemChangeDone">
+			<result name="success">
+				/JSP/Success.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
+		<action name="showChangeInformation" class="com.ATMMS.imudges.action.ShowChangeInformation">
+			<result name="success">
+				/JSP/item/showChangeInformation.jsp
+			</result>
+			<result name="error">
+				/JSP/Error.jsp
+			</result>
+		</action>
 	</package>
 </struts>    

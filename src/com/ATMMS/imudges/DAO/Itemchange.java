@@ -16,6 +16,7 @@ public class Itemchange implements java.io.Serializable {
 	private String princlpal;
 	private String medium;
 	private String remark;
+	private String username;
 
 	// Constructors
 
@@ -25,7 +26,7 @@ public class Itemchange implements java.io.Serializable {
 
 	/** full constructor */
 	public Itemchange(String type, String pid, String name, String ascription,
-			String princlpal, String medium, String remark) {
+			String princlpal, String medium, String remark, String username) {
 		this.type = type;
 		this.pid = pid;
 		this.name = name;
@@ -33,6 +34,7 @@ public class Itemchange implements java.io.Serializable {
 		this.princlpal = princlpal;
 		this.medium = medium;
 		this.remark = remark;
+		this.username = username;
 	}
 
 	// Property accessors
@@ -99,6 +101,14 @@ public class Itemchange implements java.io.Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

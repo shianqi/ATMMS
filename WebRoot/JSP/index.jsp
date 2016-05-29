@@ -397,7 +397,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 		%>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><%=request.getSession().getValue("username")%></a></li>
+        <li><a target="J_iframe" href="<%=basePath%>showItemList.action"><%=request.getSession().getValue("username")%>&nbsp;&nbsp;<span class="badge">${messageNumber}</span></a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">设置 <span class="caret"></span></a>
           <ul class="dropdown-menu">  

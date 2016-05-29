@@ -25,6 +25,14 @@ public class UserService {
 		return false;
 	}
 	
+	public static String getUsername(){
+		Map<String , Object> session = ActionContext.getContext().getSession();
+		if(session.get("state")!=null&&session.get("state").equals("1")&&(session.get("userType").equals("2")||session.get("userType").equals("1"))){
+			return (String)session.get("username");
+		}
+		return "";
+	}
+	
 	public boolean fixPassword(String username,String password_old,String password_new1){
 		UserDAO usersDAO = new UserDAO();
 		try {

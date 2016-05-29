@@ -3,6 +3,7 @@ package com.ATMMS.imudges.action;
 import java.util.Map;
 
 import com.ATMMS.imudges.service.FactoryService;
+import com.ATMMS.imudges.service.ItemChangeService;
 import com.ATMMS.imudges.service.ItemService;
 import com.ATMMS.imudges.service.MajorService;
 import com.ATMMS.imudges.service.OptionService;
@@ -13,8 +14,16 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class Login extends ActionSupport{
+	private String messageNumber;
 	private String username;
 	private String password;
+	
+	public String getMessageNumber() {
+		return messageNumber;
+	}
+	public void setMessageNumber(String messageNumber) {
+		this.messageNumber = messageNumber;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -43,11 +52,13 @@ public class Login extends ActionSupport{
 		SubsystemService subsystemService = new SubsystemService();
 		ItemService itemService = new ItemService();
 		OptionService optionService = new OptionService();
+		ItemChangeService itemChangeService = new ItemChangeService();
 		
 		majorService.getAllMajor();
 		factoryService.getAllFactory();
 		subsystemService.getAllSubsystem();
 		itemService.getAllItem();
 		optionService.getAllOption();
+		messageNumber = itemChangeService.getMessageNumber()+"";
 	}
 }

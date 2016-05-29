@@ -64,6 +64,7 @@ public class ItemService {
 			Itemchange change = new Itemchange();
 			change.setPid(item.getId()+"");
 			change.setType("2");
+			change.setUsername(UserService.getUsername());
 			changeDAO.save(change);
 			return true;
 		}
@@ -105,6 +106,7 @@ public class ItemService {
 				change.setMedium(medium);
 				change.setRemark(remark);
 				change.setType("1");
+				change.setUsername(UserService.getUsername());
 				changeDAO.save(change);
 				return true;
 			}

@@ -8,7 +8,7 @@
     <class name="com.ATMMS.imudges.DAO.Itemchange" table="itemchange" catalog="ATMMS">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="increment" />
+            <generator class="identity" />
         </id>
         <property name="type" type="java.lang.String">
             <column name="type" />
@@ -30,6 +30,9 @@
         </property>
         <property name="remark" type="java.lang.String">
             <column name="remark" />
+        </property>
+        <property name="username" type="java.lang.String">
+            <column name="username" />
         </property>
     </class>
 </hibernate-mapping>
