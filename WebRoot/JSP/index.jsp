@@ -376,7 +376,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" target="J_iframe">Brand</a>
+      <a class="navbar-brand" target="J_iframe">ATMMS</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
